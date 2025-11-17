@@ -1,4 +1,4 @@
-# Step 8: Thank You
+# Step 8: Conclusion
 
 Congratulations! You've completed the cagent workshop and learned how to build
 intelligent agents that can work together on complex tasks.
