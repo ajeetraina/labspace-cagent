@@ -5,7 +5,17 @@ description: |
 sections:
   - title: Introduction
     contentPath: .labspace/01-introduction.md
-  - title: Main Content 1
-    contentPath: .labspace/02-main-content.md
+  - title: Getting Started
+    contentPath: .labspace/02-getting-started.md
+  - title: Using Built-in tools
+    contentPath: .labspace/03-using-builtin-tools.md  
+  - title: Using MCP
+    contentPath: .labspace/04-using-mcp.md
+  - title: Sharing agents
+    contentPath: .labspace/05-sharing-agents.md
+  - title: Introduction to Sub-agents
+    contentPath: .labspace/06-sub-agents.md
+  - title: Using Docker Model Runner
+    contentPath: .labspace/06-model-runner.md
   - title: Conclusion
     contentPath: .labspace/03-conclusion.md
