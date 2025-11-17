@@ -19,9 +19,9 @@ In this workshop we will learn:
 
 To launch the labsapce, run the following command:
 
-    ```bash
-    docker compose -f oci://ajeetraina777/labspace-cagent up -d
-    ```
+```bash
+  docker compose -f oci://ajeetraina777/labspace-cagent up -d
+```
 
  
 and then open your browser to [https://localhost:3030](https://localhost:3030)
