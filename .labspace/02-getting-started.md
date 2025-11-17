@@ -1,4 +1,4 @@
-# Step 1: Introduction to cagent
+# Step 2: Introduction to cagent
 
 In this step we will start small, we will see how to create simple agents with
 cagent.
