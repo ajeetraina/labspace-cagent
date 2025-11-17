@@ -11,19 +11,19 @@ Exercice: push your developer agent, ask your neighour to pull and run it. Play 
 Here's how to push an agent:
 
 ```console
-$ cagent push developer.yaml your-account/cagent-developer
+cagent push developer.yaml your-account/cagent-developer
 ```
 
 You can then pull that agent:
 
 ```console
-$ cagent pull your-account/cagent-developer
+cagent pull your-account/cagent-developer
 ```
 
 Or you might want to directly run it:
 
 ```console
-$ cagent run your-account/cagent-developer
+cagent run your-account/cagent-developer
 ```
 
 TODO: @rumpl give some example
