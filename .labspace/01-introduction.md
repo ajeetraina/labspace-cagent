@@ -23,45 +23,61 @@ simple chatbots, cagent agents can:
 
 Before starting this workshop, you should have:
 
-1. **cagent installed** - Follow the installation instructions
-2. **Docker Desktop running** - Required for Step 3 onwards (mcp and agent sharing)
+1. **cagent installed** - Follow the installation instructions below
+2. **Docker Desktop running** - Required for Step 3 onwards (MCP and agent sharing)
 3. **Docker Hub account** - For pushing and pulling shared agents
 4. **AI API access** - OpenAI, Anthropic, or other supported model providers
 
-## Step 1. cagent installation instructions
+## Step 1: Install cagent on Linux
 
-[Prebuilt binaries](https://github.com/docker/cagent/releases) for Windows,
-macOS and Linux can be found on the releases page of the [project's GitHub
-repository](https://github.com/docker/cagent/releases)
-
-Once you've downloaded the appropriate binary for your platform, you may need to
-give it executable permissions. On macOS and Linux, this is done with the
-following command:
-
-```sh
-# linux amd64 build example
-chmod +x /path/to/downloads/cagent-linux-amd64
-```
-
-You can then rename the binary to `cagent` and configure your `PATH` to be able
-to find it (configuration varies by platform).
-
-### Set your API keys
-
-Based on the models you configure your agents to use, you will need to set the
-corresponding provider API key accordingly, all theses keys are optional, you
-will likely need at least one of these, though:
+Since you're running this lab on Ubuntu Linux, let's install cagent directly. Run the following commands:
 
 ```bash
-# For OpenAI models
-export OPENAI_API_KEY=your_api_key_here
+# Download the latest cagent Linux binary
+curl -L -o /tmp/cagent https://github.com/docker/cagent/releases/latest/download/cagent-linux-amd64
 
-# For Anthropic models
-export ANTHROPIC_API_KEY=your_api_key_here
+# Make it executable
+chmod +x /tmp/cagent
 
-# For Gemini models
-export GOOGLE_API_KEY=your_api_key_here
+# Move it to a location in your PATH
+sudo mv /tmp/cagent /usr/local/bin/cagent
+
+# Verify installation
+cagent --version
 ```
+
+You should see output showing the cagent version. If you see "command not found", make sure `/usr/local/bin` is in your PATH:
+
+```bash
+echo $PATH
+```
+
+If needed, add it to your PATH:
+
+```bash
+export PATH="/usr/local/bin:$PATH"
+```
+
+### Alternative: Manual Installation
+
+If you prefer to install manually or need a specific version, visit the [cagent releases page](https://github.com/docker/cagent/releases) and download the Linux binary:
+
+```bash
+# Replace VERSION with your desired version (e.g., v0.1.0)
+VERSION="v0.1.0"
+curl -L -o /tmp/cagent https://github.com/docker/cagent/releases/download/$VERSION/cagent-linux-amd64
+chmod +x /tmp/cagent
+sudo mv /tmp/cagent /usr/local/bin/cagent
+```
+
+## Step 2: Set Your API Keys
+
+You'll configure your API keys in the next step of this workshop. Based on the models you configure your agents to use, you will need to set the corresponding provider API key. You will need at least one of these:
+
+- **OpenAI** - For GPT-4, GPT-4o, and other OpenAI models
+- **Anthropic** - For Claude models (Claude 3.5 Sonnet, etc.)
+- **Google** - For Gemini models
+- **Docker Model Runner (DMR)** - For local models (no API key needed)
 
 ## Workshop Overview
 
@@ -73,3 +89,14 @@ While we learn how to use cagent we will focus on making a coding agent.
 By the end of this workshop you should have everything you need to make your own
 agents that do things for you.
 
+## What You'll Learn
+
+- **Step 2**: Getting started with your first agent and setting up API keys
+- **Step 3**: Using built-in tools for file operations and web browsing
+- **Step 4**: Integrating external services with Model Context Protocol (MCP)
+- **Step 5**: Sharing agents with your team via Docker Hub
+- **Step 6**: Building multi-agent teams with sub-agents
+- **Step 7**: Using Docker Model Runner for local AI models
+- **Step 8**: Next steps and advanced topics
+
+Let's get started!
