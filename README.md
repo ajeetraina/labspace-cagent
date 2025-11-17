@@ -4,6 +4,15 @@ Welcome to this labspace on building intelligent agents using cagent! This works
 
 ## Learning objectives
 
+In this workshop we will learn:
+
+- How to create simple agents with cagent
+- How to use built-in generaic agentic tools
+- How cagent makes it easy to use an MCP server from the MCP Toolkit.
+- How to share agents with Docker Registry
+- When and how to use Multi-agent system
+- Using Docker Model Runner with cagent
+
 
 
 ## Launch the Labspace
