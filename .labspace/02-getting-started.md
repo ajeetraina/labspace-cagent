@@ -87,7 +87,7 @@ Or to use a local Docker Model Runner model:
 cat > basic_hello_dmr.yaml << 'EOF'
 agents:
   root:
-    model: dmr/llama3.2:3b
+    model: ai/llama3.2:3b
     instruction: You talk like a pirate
 EOF
 ```
