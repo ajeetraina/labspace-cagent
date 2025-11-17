@@ -4,11 +4,11 @@
 
 To use cagent, you'll need at least one API key from your preferred AI provider. Please provide the API key(s) you want to use:
 
-::variableDefinition[OPENAI_API_KEY]{prompt="Enter your OpenAI API key (or leave blank if not using OpenAI)"}
+::variableDefinition[openaikey]{prompt="Enter your OpenAI API key (or leave blank if not using OpenAI)"}
 
-::variableDefinition[ANTHROPIC_API_KEY]{prompt="Enter your Anthropic API key (or leave blank if not using Anthropic)"}
+::variableDefinition[anthropickey]{prompt="Enter your Anthropic API key (or leave blank if not using Anthropic)"}
 
-::variableDefinition[GOOGLE_API_KEY]{prompt="Enter your Google/Gemini API key (or leave blank if not using Google)"}
+::variableDefinition[googlekey]{prompt="Enter your Google/Gemini API key (or leave blank if not using Google)"}
 
 ## Setting Up Your Environment
 
@@ -16,13 +16,13 @@ Now that you've provided your API key(s), let's set them in your environment. Ru
 
 ```bash
 # For OpenAI models (if you provided an OpenAI key)
-export OPENAI_API_KEY=$$OPENAI_API_KEY$$
+export OPENAI_API_KEY=$$openaikey$$
 
 # For Anthropic models (if you provided an Anthropic key)
-export ANTHROPIC_API_KEY=$$ANTHROPIC_API_KEY$$
+export ANTHROPIC_API_KEY=$$anthropickey$$
 
 # For Gemini models (if you provided a Google key)
-export GOOGLE_API_KEY=$$GOOGLE_API_KEY$$
+export GOOGLE_API_KEY=$$googlekey$$
 ```
 
 > **Note:** You only need to set the API keys for the providers you plan to use. At minimum, you need one valid API key to proceed.
