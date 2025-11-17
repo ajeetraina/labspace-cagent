@@ -4,28 +4,13 @@ In the previous steps, we created individual agents with various tools. Now
 we'll learn about cagent's most powerful feature: sub-agents. This allows you to
 create teams of specialized agents that work together on complex tasks.
 
-Creating a multi-agent system can help in multiple ways.
+## Exercise: Create a Simple Multi-Agent System
 
 Create a multi-agent system with one `root` agent and another one that only
 speaks in pirate.
 
-If everything goes well you should have a team of agents that can answer, and if
-you ask the team to answer you in pirate speak you will see the `root` agent
-transfer the task to its sub-agent.
-
-<details>
-<summary>Hint 1</summary>
-Add a second agent and define it as a sub-agent in the `sug_agents` array property of your `root` agent.
-</details>
-<details>
-<summary>Hint 2</summary>
-The sub-agent needs a description.
-</details>
-
-<details>
-<summary>Solution</summary>
-
-```yaml
+```bash
+cat > multi_agent_pirate.yaml << 'EOF'
 version: "2"
 
 agents:
@@ -37,34 +22,44 @@ agents:
     model: openai/gpt-4o
     description: An agent that talks like a pirate
     instruction: Talk like a pirate
+EOF
 ```
 
-Note: the `pirate` agent has a `description`, this is required when an agent is
+Run the agent:
+
+```bash
+cagent run multi_agent_pirate.yaml
+```
+
+If everything goes well you should have a team of agents that can answer questions. If you ask the team to answer you in pirate speak, you will see the `root` agent transfer the task to its sub-agent.
+
+**Note:** The `pirate` agent has a `description`, this is required when an agent is
 a sub-agent of another. This is what the LLM uses to figure out which agent it
 needs to transfer the task to.
 
-</details>
-
-_When to use multi-agent systems?_
+## When to Use Multi-Agent Systems?
 
 As your agent grows and gains more capabilities you might get worse results if
 for example the agent needs to do too many things (code, review code, triage
-usses, etc.). Adding tools to an agent is powerful and the core definition of an
-agent, but today LLMs tend to have worse performance the more tools they have,
+issues, etc.). Adding tools to an agent is powerful and the core definition of an
+agent, but today LLMs tend to have worse performance the more tools they have -
 they get confused in a way.
 
 In these cases it's best to split your agent into multiple agents, each with its
 own purpose.
 
-Here is an example used by the cagent's PM. It defines a team of 3 agents:
+## Advanced Example: Development Team
+
+Here is an example used by cagent's PM. It defines a team of 3 agents:
 
 - a PM
-- a designer
+- a designer  
 - a developer
 
-Our PM had amazing results with this setup. Try it out!
+Create this advanced multi-agent system:
 
-```yaml
+```bash
+cat > dev_team.yaml << 'EOF'
 version: "2"
 
 models:
@@ -104,7 +99,7 @@ agents:
 
       Always start by understanding what the user wants to build, then break it down into logical, small iterations.
 
-      Always make sure to ask the right agent to do the right task using the appropriate toolset. don't try to do everything yourself.
+      Always make sure to ask the right agent to do the right task using the appropriate toolset. Don't try to do everything yourself.
     sub_agents: [designer, awesome_engineer]
     add_date: true
     toolsets:
@@ -219,4 +214,19 @@ agents:
         path: dev_memory.db
       - type: mcp
         ref: docker:context7
+EOF
 ```
+
+Run this development team:
+
+```bash
+cagent run dev_team.yaml
+```
+
+Try asking it to build a simple web application, like: `Build a simple todo app with a nice UI`
+
+The PM will coordinate with the designer and engineer to break down the work and deliver features iteratively.
+
+## Next Steps
+
+In Step 7, we'll explore how to use Docker Model Runner (DMR) to run local AI models with your agents.
