@@ -28,7 +28,7 @@ Before starting this workshop, you should have:
 3. **Docker Hub account** - For pushing and pulling shared agents
 4. **AI API access** - OpenAI, Anthropic, or other supported model providers
 
-## cagent installation instructions
+## Step 1. cagent installation instructions
 
 [Prebuilt binaries](https://github.com/docker/cagent/releases) for Windows,
 macOS and Linux can be found on the releases page of the [project's GitHub
