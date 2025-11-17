@@ -20,7 +20,7 @@ In this workshop we will learn:
 To launch the labsapce, run the following command:
 
 ```bash
-  docker compose -f oci://ajeetraina777/labspace-cagent up -d
+  CONTENT_PATH=$PWD docker compose -f oci://dockersamples/labspace-content-dev -f .labspace/compose.override.yaml up
 ```
 
  
