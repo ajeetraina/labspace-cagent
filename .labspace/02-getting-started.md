@@ -1,7 +1,31 @@
-# Step 2: Introduction to cagent
+# Step 2: Getting Started with cagent
 
-In this step we will start small, we will see how to create simple agents with
-cagent.
+## First, let's set up your API keys
+
+To use cagent, you'll need at least one API key from your preferred AI provider. Please provide the API key(s) you want to use:
+
+::variableDefinition[OPENAI_API_KEY]{prompt="Enter your OpenAI API key (or leave blank if not using OpenAI)"}
+
+::variableDefinition[ANTHROPIC_API_KEY]{prompt="Enter your Anthropic API key (or leave blank if not using Anthropic)"}
+
+::variableDefinition[GOOGLE_API_KEY]{prompt="Enter your Google/Gemini API key (or leave blank if not using Google)"}
+
+## Setting Up Your Environment
+
+Now that you've provided your API key(s), let's set them in your environment. Run the following commands based on the provider(s) you're using:
+
+```bash
+# For OpenAI models (if you provided an OpenAI key)
+export OPENAI_API_KEY=$$OPENAI_API_KEY$$
+
+# For Anthropic models (if you provided an Anthropic key)
+export ANTHROPIC_API_KEY=$$ANTHROPIC_API_KEY$$
+
+# For Gemini models (if you provided a Google key)
+export GOOGLE_API_KEY=$$GOOGLE_API_KEY$$
+```
+
+> **Note:** You only need to set the API keys for the providers you plan to use. At minimum, you need one valid API key to proceed.
 
 ## Your First Agent
 
@@ -27,19 +51,35 @@ question to your agent and it should answer in pirate speak like so:
 
 ![cagent tui](cagent-tui.png)
 
-If you don't have access to OpenAI, go to [models.dev](https://models.dev) and
-look for the models that exist for `openai`, `anthropic` or `google` provider
-IDs, and swap for one which you have a key for.
+## Choosing Different Models
+
+If you don't have access to OpenAI, or want to use a different provider, you can easily swap the model in your YAML configuration. Visit [models.dev](https://models.dev) and look for models that exist for your provider.
 
 `cagent` supports these providers:
 
-- `openai`
-- `anthropic`
-- `google`
-- `dmr`: Use any local [Docker Model](https://docs.docker.com/ai/model-runner/) Runner model that you alrady have pulled
-  locally.
+- **`openai`** - OpenAI models (GPT-4, GPT-4o, etc.)
+- **`anthropic`** - Anthropic models (Claude 3.5 Sonnet, etc.)
+- **`google`** - Google Gemini models
+- **`dmr`** - Use any local [Docker Model Runner](https://docs.docker.com/ai/model-runner/) model that you already have pulled locally
+
+For example, to use Anthropic's Claude instead:
+
+```yaml
+agents:
+  root:
+    model: anthropic/claude-3-5-sonnet-20241022
+    instruction: You talk like a pirate
+```
+
+Or to use a local Docker Model Runner model:
+
+```yaml
+agents:
+  root:
+    model: dmr/llama3.2:3b
+    instruction: You talk like a pirate
+```
 
 ## Next Steps
 
-In Step 2, we'll dive deeper into agent configuration, add more personality, and
-learn about agent properties like `add_date` and `add_environment_info`.
+In Step 3, we'll dive deeper into agent configuration and explore the powerful built-in tools that cagent provides for file operations, web browsing, and more.
