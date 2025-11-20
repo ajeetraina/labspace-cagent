@@ -11,7 +11,7 @@ In this workshop we will learn:
 - How cagent makes it easy to use an MCP server from the MCP Toolkit.
 - How to share agents with Docker Registry
 - When and how to use Multi-agent system
-- Using Docker Model Runner with cagent
+- Using Docker Model Runner with cagent - Work-in-progress
 
 
 
