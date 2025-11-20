@@ -47,9 +47,9 @@ cagent run basic_hello.yaml
 ```
 
 If everything is setup correctly, you should see the TUI and be able to ask a
-question to your agent and it should answer in pirate speak like so:
+question to your agent and it should answer in pirate speak.
 
-![cagent tui](cagent-tui.png)
+
 
 To exit the TUI, press `Ctrl+C`.
 
