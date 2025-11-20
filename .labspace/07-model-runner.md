@@ -1,48 +1,40 @@
-# Step 7: Using Docker Model Runner (DMR)
+## Step 7: Using Docker Model Runner (DMR)
 
-Docker Model Runner (DMR) makes it easy to manage, run, and deploy AI models using Docker. Designed for developers,
-Docker Model Runner streamlines the process of pulling, running, and serving large language models (LLMs) and other AI
-models directly from Docker Hub or any OCI-compliant registry.
+Docker Model Runner (DMR) makes it easy to run AI models locally. In this labspace, we've pre-configured a Model Runner container accessible at `http://model-runner:12434`.
 
-Discover curated models on [Docker Hub](https://hub.docker.com/u/ai).
+### Pull a Model
 
-Naturally, `cagent` has first-class support for DMR.
-
-## Step 1: Pull a Model
-
-Before running an agent with a local model, make sure you have the model available locally:
-
+First, pull a model (this may take a few minutes):
 ```bash
-docker model pull ai/smollm2
+curl -X POST http://model-runner:12434/models/pull \
+  -H "Content-Type: application/json" \
+  -d '{"model": "ai/smollm2"}'
 ```
 
-This will download the model to your local machine.
+### Create an Agent Using DMR
 
-## Step 2: Create an Agent Using DMR
-
-Now create an agent that uses this local model:
-
+Create an agent that uses the local model:
 ```bash
 cat > dmr_pirate_agent.yaml << 'EOF'
+version: "2"
+
 agents:
   root:
     model: dmr/ai/smollm2
     instruction: Talk like a pirate
+    model_config:
+      base_url: http://model-runner:12434/engines/llama.cpp/v1
 EOF
 ```
 
-## Step 3: Run the Agent
-
-Run the agent:
-
+### Run the Agent
 ```bash
 cagent run dmr_pirate_agent.yaml
 ```
 
-You should see the agent using your local model. This is great for:
-
+This is great for:
 - **Privacy**: Keep your data local
-- **Offline work**: No internet connection needed
+- **Offline work**: No internet connection needed  
 - **Cost savings**: No API fees
 - **Experimentation**: Try different models without API limits
 
