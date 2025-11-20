@@ -16,4 +16,4 @@ sections:
   - title: Introduction to Sub-agents
     contentPath: .labspace/06-sub-agents.md
   - title: Conclusion
-    contentPath: .labspace/08-conclusion.md
+    contentPath: .labspace/07-conclusion.md
