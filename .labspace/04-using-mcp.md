@@ -30,7 +30,7 @@ agents:
     toolsets:
       - type: mcp
         remote:
-          url: http://localhost:8080
+          url: http://mcp-gateway:8080
           transport_type: sse
 EOF
 ```
