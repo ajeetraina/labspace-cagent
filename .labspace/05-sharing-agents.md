@@ -10,15 +10,23 @@ Enter your Docker Hub username:
 
 ::variableDefinition[dockerhubid]{prompt="Enter your Docker Hub username"}
 
+**Run this command** to set your Docker Hub ID as an environment variable:
+```
+export DOCKER_HUB_ID="{{dockerhubid}}"
+```
+
+Verify it's set:
+```
+echo $DOCKER_HUB_ID
+```
+
 Make sure you're logged in to Docker Hub:
-```bash
+```
 docker login
 ```
 
 ### Push Your Agent
-
-Push your developer agent to Docker Hub:
-```bash
+```
 cagent push developer.yaml $DOCKER_HUB_ID/cagent-developer
 ```
 
