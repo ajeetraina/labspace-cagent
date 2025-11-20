@@ -3,17 +3,32 @@ services:
     environment:
       PROJECT_CLONE_URL: https://github.com/ajeetraina/labspace-cagent
 
+  # MCP Gateway - Provides containerized MCP servers for cagent
+  # Available at http://localhost:8080 (SSE transport)
+  mcp-gateway:
+    image: docker/mcp-gateway
+    container_name: labspace-mcp-gateway
+    command:
+      - gateway
+      - run
+      - --port=8080
+      - --transport=sse
+      - --servers=fetch,duckduckgo,context7
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
   # workspace:
   #   # Override the default image if desired
   #   # More details - https://github.com/dockersamples/labspace-infra/blob/main/docs/configuration.md#overriding-the-workspace-image
   #   image: dockersamples/labspace-workspace-java
-
   #   # Override the default ports to publish additional ports you may need
   #   # More details - https://github.com/dockersamples/labspace-infra/blob/main/docs/configuration.md#overriding-the-workspace-ports
   #   ports: !override
   #     - "6274:6274" # Expose the MCP inspector users will launch from inside the Labspace
-  #     - "8080:8080" # The port used by the app
-
+  #     - "8081:8081" # The port used by the app (changed from 8080 to avoid conflict with MCP Gateway)
   #   # Add other environment variables as needed
   #   environment:
   #     DANGEROUSLY_OMIT_AUTH: "true" # Skip auth for the MCP Inspector
