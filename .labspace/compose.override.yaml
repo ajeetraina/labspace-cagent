@@ -11,7 +11,7 @@ services:
     command:
       - --port=8080
       - --transport=sse
-      - --servers=fetch,duckduckgo,context7
+      - --servers=fetch,duckduckgo,context7,yahoo-finance
     ports:
       - "8080:8080"
     volumes:
