@@ -13,7 +13,6 @@ and read the specification).
 The Docker MCP Toolkit is a gateway that lets you set up, manage, and run
 containerized MCP servers and connect them to AI agents.
 
-![MCP Toolkit](mcp.png)
 
 Naturally, `cagent` makes it easy to use an MCP server from the MCP Toolkit.
 
@@ -41,112 +40,13 @@ Run this agent:
 cagent run fetch_agent.yaml
 ```
 
-Ask it: `fetch rumpl.dev`
+Ask it: `fetch docker.com`
 
 You will see the agent calling the `fetch` tool from the `fetch` MCP server.
 
 This is the simplest way to use an MCP server with cagent, but you can also run
 _any_ MCP server, local or remote.
 
-## Custom Local MCP Server
-
-To run the following example you will need the
-[uvx](https://docs.astral.sh/uv/getting-started/installation/) command line,
-which is often needed when running local MCP servers outside of docker
-containers.
-
-`yfmcp` is the Yahoo Finance MCP server. Create the agent:
-
-```bash
-cat > yahoo_finance_agent.yaml << 'EOF'
-version: "2"
-agents:
-  root:
-    model: openai/gpt-4o
-    add_date: true
-    instruction: |
-      Analyse the given stock
-      Use tables to display the data
-    toolsets:
-      - type: mcp
-        command: uvx
-        args: ["yfmcp"]
-EOF
-```
-
-Run the agent:
-
-```bash
-cagent run yahoo_finance_agent.yaml
-```
-
-## Remote MCP Server
-
-You can also connect to remote MCP servers. Create this agent:
-
-```bash
-cat > moby_expert.yaml << 'EOF'
-version: "2"
-
-agents:
-  root:
-    model: anthropic/claude-3-5-sonnet-latest
-    description: Moby Project Expert
-    instruction: You are an AI assistant with expertise in the moby/moby project's documentation.
-    toolsets:
-      - type: mcp
-        remote:
-          url: https://gitmcp.io/moby/moby
-          transport_type: streamable
-EOF
-```
-
-Run the agent:
-
-```bash
-cagent run moby_expert.yaml
-```
-
-## Your Own MCP Server
-
-In this exercise we will take an existing (very simple) MCP server, build it,
-and then use it in our agent.
-
-First, let's clone the repository and build the Docker image:
-
-```bash
-git clone https://github.com/rumpl/mcp-strawberry
-cd mcp-strawberry
-docker build -t mcp-strawberry .
-cd ..
-```
-
-> **Note:** If you don't want to clone and build, you can use the already pushed MCP server image from Docker Hub: `djordjelukic1639080/mcp-strawberry`
-
-Now create an agent that will use this MCP server:
-
-```bash
-cat > strawberry_agent.yaml << 'EOF'
-version: "2"
-
-agents:
-  root:
-    model: openai/gpt-4o
-    instruction: Count the number of 'r' in a word
-    toolsets:
-      - type: mcp
-        command: docker
-        args: ["run", "-i", "--rm", "mcp-strawberry"]
-EOF
-```
-
-Run the agent:
-
-```bash
-cagent run strawberry_agent.yaml
-```
-
-Ask it: `How many 'r's are in the word strawberry?`
 
 ## Enhancing Our Developer Agent
 
