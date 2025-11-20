@@ -58,17 +58,6 @@ If needed, add it to your PATH:
 export PATH="/usr/local/bin:$PATH"
 ```
 
-### Alternative: Manual Installation
-
-If you prefer to install manually or need a specific version, visit the [cagent releases page](https://github.com/docker/cagent/releases) and download the Linux binary:
-
-```bash
-# Replace VERSION with your desired version (e.g., v0.1.0)
-VERSION="v0.1.0"
-curl -L -o /tmp/cagent https://github.com/docker/cagent/releases/download/$VERSION/cagent-linux-amd64
-chmod +x /tmp/cagent
-sudo mv /tmp/cagent /usr/local/bin/cagent
-```
 
 ## Step 2: Set Your API Keys
 
