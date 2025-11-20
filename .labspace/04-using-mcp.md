@@ -29,7 +29,9 @@ agents:
     instruction: Summarize URLs for users
     toolsets:
       - type: mcp
-        ref: docker:fetch
+        remote:
+          url: http://localhost:8080
+          transport_type: sse
 EOF
 ```
 
