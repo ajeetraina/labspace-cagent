@@ -81,20 +81,6 @@ Then run it:
 cagent run basic_hello_claude.yaml
 ```
 
-Or to use a local Docker Model Runner model:
-
-```bash
-cat > basic_hello_dmr.yaml << 'EOF'
-agents:
-  root:
-    model: dmr/ai/llama3.2:1B-Q8_0
-    instruction: You talk like a pirate
-EOF
-```
-
-```bash
-cagent run basic_hello_dmr.yaml
-```
 
 ## Next Steps
 
