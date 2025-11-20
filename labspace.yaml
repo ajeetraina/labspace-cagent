@@ -15,7 +15,5 @@ sections:
     contentPath: .labspace/05-sharing-agents.md
   - title: Introduction to Sub-agents
     contentPath: .labspace/06-sub-agents.md
-  - title: Using Docker Model Runner
-    contentPath: .labspace/07-model-runner.md
   - title: Conclusion
     contentPath: .labspace/08-conclusion.md
