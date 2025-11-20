@@ -1,6 +1,6 @@
 ## Step 5: Sharing Agents with Docker Registry
 
-By now you should have a couple of agents, and maybe one that already does something useful. Wouldn't it be nice if we could share agents with others?
+By now, you should have a couple of agents, and maybe one that already does something useful. Wouldn't it be nice if we could share agents with others?
 
 Sharing agents with cagent is extremely simple - you can push and pull agents to any OCI registry.
 
