@@ -9,7 +9,6 @@ services:
     image: docker/mcp-gateway
     container_name: labspace-mcp-gateway
     command:
-      - gateway
       - run
       - --port=8080
       - --transport=sse
