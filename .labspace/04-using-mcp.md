@@ -75,7 +75,9 @@ agents:
       - type: shell
       - type: filesystem
       - type: mcp
-        ref: docker:context7
+        remote:
+          url: http://mcp-gateway:8080
+          transport_type: sse
 EOF
 ```
 
