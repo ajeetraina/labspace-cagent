@@ -26,14 +26,14 @@ cagent push developer.yaml $DOCKER_HUB_ID/cagent-developer
 
 You can pull that agent on any machine:
 ```bash
-cagent pull {{dockerhubid}}/cagent-developer
+cagent pull $DOCKER_HUB_ID/cagent-developer
 ```
 
 ### Run Directly from Registry
 
 Or run it directly without pulling first:
 ```bash
-cagent run {{dockerhubid}}/cagent-developer
+cagent run $DOCKER_HUB_ID/cagent-developer
 ```
 
 ### Exercise
