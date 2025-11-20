@@ -19,7 +19,7 @@ docker login
 
 Push your developer agent to Docker Hub:
 ```bash
-cagent push developer.yaml {{dockerhubid}}/cagent-developer
+cagent push developer.yaml $DOCKER_HUB_ID/cagent-developer
 ```
 
 ### Pull an Agent
