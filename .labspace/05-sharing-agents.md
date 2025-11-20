@@ -42,15 +42,6 @@ cagent pull $DOCKER_HUB_ID/cagent-developer
 cagent run $DOCKER_HUB_ID/cagent-developer
 ```
 
-### Exercise
-
-1. Push your developer agent to your Docker Hub account
-2. Ask your neighbor for their Docker Hub ID
-3. Pull and run their agent
-4. Try some of the pre-built agents from the community:
-```bash
-   cagent run creek/pirate
-```
 
 ## Next Steps
 
