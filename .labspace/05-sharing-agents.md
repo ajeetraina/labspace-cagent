@@ -1,29 +1,51 @@
-# Step 5: Sharing Agents with Docker Registry
+## Step 5: Sharing Agents with Docker Registry
 
-By now you should have a couple of uselesss agents, and maybe one that already
-does something useful. Wouldn't it be nice if we could share agents with others?
+By now you should have a couple of agents, and maybe one that already does something useful. Wouldn't it be nice if we could share agents with others?
 
-Sharing agents with cagent should be extermely simple, you can push and pull
-agents to any OCI registry.
+Sharing agents with cagent is extremely simple - you can push and pull agents to any OCI registry.
 
-Exercice: push your developer agent, ask your neighour to pull and run it. Play around
+### Setting Up Your Docker Hub ID
 
-Here's how to push an agent:
+Enter your Docker Hub username:
 
-```console
-cagent push developer.yaml your-account/cagent-developer
+::variableDefinition[dockerhubid]{prompt="Enter your Docker Hub username"}
+
+Make sure you're logged in to Docker Hub:
+```bash
+docker login
 ```
 
-You can then pull that agent:
+### Push Your Agent
 
-```console
-cagent pull your-account/cagent-developer
+Push your developer agent to Docker Hub:
+```bash
+cagent push developer.yaml {{dockerhubid}}/cagent-developer
 ```
 
-Or you might want to directly run it:
+### Pull an Agent
 
-```console
-cagent run your-account/cagent-developer
+You can pull that agent on any machine:
+```bash
+cagent pull {{dockerhubid}}/cagent-developer
 ```
 
-TODO: @rumpl give some example
+### Run Directly from Registry
+
+Or run it directly without pulling first:
+```bash
+cagent run {{dockerhubid}}/cagent-developer
+```
+
+### Exercise
+
+1. Push your developer agent to your Docker Hub account
+2. Ask your neighbor for their Docker Hub ID
+3. Pull and run their agent
+4. Try some of the pre-built agents from the community:
+```bash
+   cagent run creek/pirate
+```
+
+## Next Steps
+
+In Step 6, we'll explore multi-agent systems and sub-agents.
