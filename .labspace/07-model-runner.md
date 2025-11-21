@@ -1,94 +1,107 @@
 # Step 7: Using Docker Model Runner (DMR)
 
-Docker Model Runner (DMR) makes it easy to run AI models locally without needing external API keys. In this Labspace, we've pre-configured a Model Runner container that's ready to use!
+Docker Model Runner (DMR) makes it easy to manage, run, and deploy AI models using Docker. Designed for developers, Docker Model Runner streamlines the process of pulling, running, and serving large language models (LLMs) and other AI models directly from Docker Hub or any OCI-compliant registry.
 
-## Why Use Docker Model Runner?
+## Model Runner in This Labspace
 
-- **No API Keys Required**: Run models locally without OpenAI/Anthropic/Google keys
-- **Privacy**: Keep your data on your machine
-- **Offline Work**: No internet connection needed after pulling models
-- **Cost Savings**: No API fees
-- **Experimentation**: Try different models without limits
+For this labspace, we've pre-configured a Model Runner container that's accessible at `http://model-runner:8080`.
 
-## Step 1: Pull a Model
-
-First, let's pull the `smollm2` model (a small but capable model):
-
-```bash
-curl -X POST http://model-runner:12434/models/create \
-  -H "Content-Type: application/json" \
-  -d '{"model": "ai/smollm2"}'
+**Note:** The Model Runner is defined in `.labspace/compose.override.yaml`:
+```yaml
+model-runner:
+  image: docker/model-runner:latest
+  container_name: labspace-model-runner
+  ports:
+    - "12434:8080"
+  volumes:
+    - model-runner-data:/models
+  restart: unless-stopped
 ```
 
-This will download the model. Wait for it to complete.
+## Step 1: Verify Model Runner is Running
 
-## Step 2: Verify the Model is Available
-
-List available models:
-
+First, check that the Model Runner is accessible:
 ```bash
-curl http://model-runner:12434/models
+curl http://model-runner:8080/models
 ```
 
-You should see `ai/smollm2` in the list.
+You should see an empty list of models: `{"data":[]}`
+
+## Step 2: Pull a Model
+
+Pull a small model to test with:
+```bash
+curl http://model-runner:8080/models/create -X POST -d '{"from": "ai/smollm2"}'
+```
+
+This will download the model. It may take a few minutes depending on your connection.
+
+Verify the model is available:
+```bash
+curl http://model-runner:8080/models
+```
 
 ## Step 3: Test the Model Directly
 
-Let's test that the model is working:
-
+Test the model using the OpenAI-compatible API:
 ```bash
-curl http://model-runner:12434/engines/llama.cpp/v1/chat/completions \
+curl http://model-runner:8080/engines/llama.cpp/v1/chat/completions -X POST \
   -H "Content-Type: application/json" \
   -d '{
     "model": "ai/smollm2",
     "messages": [
-      {"role": "user", "content": "Hello, who are you?"}
+      {"role": "system", "content": "You are a helpful assistant."},
+      {"role": "user", "content": "Hello, how are you?"}
     ]
   }'
 ```
 
-You should see a JSON response with the model's reply.
-
 ## Step 4: Create an Agent Using DMR
 
 Now let's create a cagent that uses this local model:
-
 ```bash
 cat > dmr_pirate_agent.yaml << 'EOF'
 version: "2"
 
 agents:
   root:
-    model: dmr/ai/smollm2
+    model: ai/smollm2
     instruction: Talk like a pirate
     model_config:
-      base_url: http://model-runner:12434/engines/llama.cpp/v1
+      base_url: http://model-runner:8080/engines/llama.cpp/v1
 EOF
 ```
 
 ## Step 5: Run the Agent
-
 ```bash
 cagent run dmr_pirate_agent.yaml
 ```
 
-You should see the TUI and be able to chat with your pirate agent running entirely locally!
+Try asking it something and watch it respond in pirate speak!
 
-## Using DMR with Tools
+## Benefits of Local Models
 
-You can combine local models with all the tools we've learned about:
+Running models locally with Docker Model Runner provides several advantages:
 
+- **Privacy**: Keep your data local - nothing is sent to external APIs
+- **Offline work**: No internet connection needed once the model is downloaded
+- **Cost savings**: No API fees or token limits
+- **Experimentation**: Try different models without worrying about costs
+
+## Combining DMR with Tools
+
+You can also combine local models with all the tools we've learned about:
 ```bash
 cat > dmr_developer.yaml << 'EOF'
 version: "2"
 
 agents:
   root:
-    model: dmr/ai/smollm2
-    instruction: You are a helpful developer assistant
+    model: ai/smollm2
+    instruction: You are a developer assistant
     add_environment_info: true
     model_config:
-      base_url: http://model-runner:12434/engines/llama.cpp/v1
+      base_url: http://model-runner:8080/engines/llama.cpp/v1
     toolsets:
       - type: filesystem
       - type: shell
@@ -97,84 +110,53 @@ EOF
 ```
 
 Run it:
-
 ```bash
 cagent run dmr_developer.yaml
 ```
 
 ## Other Available Models
 
-You can explore more models on [Docker Hub AI](https://hub.docker.com/u/ai). To pull and use a different model:
+You can explore more models on [Docker Hub](https://hub.docker.com/search?q=ai%2F). Some popular options include:
 
+- `ai/smollm2` - Small and fast, great for testing
+- `ai/llama3.2:3B` - Small but capable Llama model
+- `ai/phi4` - Microsoft's efficient model
+- `ai/gemma3` - Google's Gemma 3 model
+- `ai/qwen2.5` - Alibaba's multilingual model
+
+To use a different model:
 ```bash
-# Pull a different model
-curl -X POST http://model-runner:12434/models/create \
-  -H "Content-Type: application/json" \
-  -d '{"model": "ai/llama3.2:1b"}'
-```
+# Pull the model
+curl http://model-runner:8080/models/create -X POST -d '{"from": "ai/llama3.2:3B"}'
 
-Then update your YAML to use it:
-
-```bash
+# Update your agent YAML to use the new model
 cat > dmr_llama_agent.yaml << 'EOF'
 version: "2"
 
 agents:
   root:
-    model: dmr/ai/llama3.2:1b
+    model: ai/llama3.2:3B
     instruction: You are a helpful assistant
     model_config:
-      base_url: http://model-runner:12434/engines/llama.cpp/v1
+      base_url: http://model-runner:8080/engines/llama.cpp/v1
 EOF
-```
 
-```bash
+# Run it
 cagent run dmr_llama_agent.yaml
 ```
 
-## Combining DMR with External APIs
+## API Reference
 
-You can even create multi-agent systems that combine local and cloud models:
+Here are some useful Model Runner API endpoints:
 
-```bash
-cat > hybrid_team.yaml << 'EOF'
-version: "2"
-
-agents:
-  root:
-    model: openai/gpt-4o
-    instruction: You are a team lead. Use your local assistant for quick tasks.
-    sub_agents: [local_assistant]
-  
-  local_assistant:
-    model: dmr/ai/smollm2
-    description: A local assistant for quick tasks that don't need cloud AI
-    instruction: You are a helpful local assistant
-    model_config:
-      base_url: http://model-runner:12434/engines/llama.cpp/v1
-EOF
-```
-
-## Troubleshooting
-
-If you encounter issues:
-
-1. **Check if Model Runner is running**:
-   ```bash
-   curl http://model-runner:12434/models
-   ```
-
-2. **Check model is downloaded**:
-   ```bash
-   curl http://model-runner:12434/models | grep smollm2
-   ```
-
-3. **Re-pull the model if needed**:
-   ```bash
-   curl -X POST http://model-runner:12434/models/create \
-     -H "Content-Type: application/json" \
-     -d '{"model": "ai/smollm2"}'
-   ```
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/models` | GET | List all available models |
+| `/models/create` | POST | Pull/create a new model |
+| `/models/{namespace}/{name}` | GET | Get info about a specific model |
+| `/models/{namespace}/{name}` | DELETE | Delete a model |
+| `/engines/llama.cpp/v1/chat/completions` | POST | OpenAI-compatible chat API |
+| `/metrics` | GET | Prometheus metrics |
 
 ## Next Steps
 
