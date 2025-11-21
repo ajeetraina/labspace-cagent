@@ -164,59 +164,6 @@ The agent will:
 3. Write the TypeScript server code
 4. Set up the necessary configuration files
 
-## Using DMR with MCP (No API Key Required!)
-
-You can combine Docker Model Runner with MCP for a completely local setup:
-
-```bash
-cat > local_developer.yaml << 'EOF'
-version: "2"
-
-agents:
-  root:
-    model: dmr/ai/smollm2
-    instruction: You are a helpful developer assistant
-    add_environment_info: true
-    model_config:
-      base_url: http://model-runner:12434/engines/llama.cpp/v1
-    toolsets:
-      - type: filesystem
-      - type: shell
-      - type: mcp
-        remote:
-          url: http://mcp-gateway:8080
-          transport_type: sse
-EOF
-```
-
-Run it:
-
-```bash
-cagent run local_developer.yaml
-```
-
-Now you have a fully local AI agent with web access and documentation lookup!
-
-## Troubleshooting
-
-If MCP servers aren't working:
-
-1. **Check MCP Gateway status**:
-   ```bash
-   curl http://mcp-gateway:8080/health
-   ```
-
-2. **Check available tools**:
-   ```bash
-   curl http://mcp-gateway:8080/tools
-   ```
-
-3. **Test fetch directly**:
-   ```bash
-   curl -X POST http://mcp-gateway:8080/fetch \
-     -H "Content-Type: application/json" \
-     -d '{"url": "https://example.com"}'
-   ```
 
 ## Next Steps
 
