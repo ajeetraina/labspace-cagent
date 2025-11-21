@@ -15,23 +15,3 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
-    networks:
-      - labspace
-
-  model-runner:
-    image: docker/model-runner:latest
-    container_name: labspace-model-runner
-    ports:
-      - "12434:8080"
-    volumes:
-      - model-runner-data:/models
-    restart: unless-stopped
-    networks:
-      - labspace
-
-networks:
-  labspace:
-    external: true
-
-volumes:
-  model-runner-data:
