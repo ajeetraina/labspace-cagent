@@ -229,4 +229,4 @@ The PM will coordinate with the designer and engineer to break down the work and
 
 ## Next Steps
 
-In Step 7, we'll explore how to use Docker Model Runner (DMR) to run local AI models with your agents.
+In the final step, we'll wrap up what you've learned and explore next steps.
