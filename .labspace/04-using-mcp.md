@@ -5,7 +5,6 @@ connecting AI applications to external systems.
 
 MCP is a standardized protocol that gives agents access to different MCP servers containing tools (and much more - we encourage you to read the specification).
 
-![MCP Toolkit](mcp.png)
 
 ## Pre-configured MCP Gateway
 
@@ -112,73 +111,6 @@ cagent run docs_agent.yaml
 
 Ask it: `How do I set up a basic Express.js server? Use context7 to get the latest documentation.`
 
-## Remote MCP Servers
-
-You can also connect to remote MCP servers hosted elsewhere:
-
-```bash
-cat > moby_expert.yaml << 'EOF'
-version: "2"
-
-agents:
-  root:
-    model: openai/gpt-4o
-    description: Moby Project Expert
-    instruction: You are an AI assistant with expertise in the moby/moby project documentation.
-    toolsets:
-      - type: mcp
-        remote:
-          url: https://gitmcp.io/moby/moby
-          transport_type: streamable
-EOF
-```
-
-Run the agent:
-
-```bash
-cagent run moby_expert.yaml
-```
-
-Ask it: `How does Docker's container runtime work?`
-
-## Your Own MCP Server
-
-Let's build and run a custom MCP server. This example counts letters in words:
-
-```bash
-# Clone and build the MCP server
-git clone https://github.com/rumpl/mcp-strawberry
-cd mcp-strawberry
-docker build -t mcp-strawberry .
-cd ..
-```
-
-> **Note:** If you don't want to build, use: `djordjelukic1639080/mcp-strawberry`
-
-Create an agent that uses this custom MCP server:
-
-```bash
-cat > strawberry_agent.yaml << 'EOF'
-version: "2"
-
-agents:
-  root:
-    model: openai/gpt-4o
-    instruction: Count letters in words using the available tools
-    toolsets:
-      - type: mcp
-        command: docker
-        args: ["run", "-i", "--rm", "mcp-strawberry"]
-EOF
-```
-
-Run it:
-
-```bash
-cagent run strawberry_agent.yaml
-```
-
-Ask: `How many 'r's are in the word strawberry?`
 
 ## Enhancing Our Developer Agent
 
