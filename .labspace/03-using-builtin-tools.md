@@ -209,7 +209,16 @@ agents:
 EOF
 ```
 
+Run this agent again:
+
+```bash
+cagent run developer.yaml
+```
+
+
 This can be useful if you are planning on asking your agent questions like `What were the commits made in this repository in the last day?`
+
+
 
 ## Best Practices
 
