@@ -3,7 +3,6 @@ services:
     environment:
       PROJECT_CLONE_URL: https://github.com/ajeetraina/labspace-cagent
 
-  # MCP Gateway - Provides containerized MCP servers for cagent
   mcp-gateway:
     image: docker/mcp-gateway
     container_name: labspace-mcp-gateway
@@ -17,16 +16,13 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
 
-  # Docker Model Runner - Run local LLMs
   model-runner:
     image: docker/model-runner:latest
     container_name: labspace-model-runner
     ports:
-      - "12434:12434"
+      - "12434:8080"
     volumes:
       - model-runner-data:/models
-    environment:
-      - DMR_ORIGINS=*
     restart: unless-stopped
 
 volumes:
