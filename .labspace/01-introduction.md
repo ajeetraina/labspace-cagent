@@ -56,7 +56,7 @@ chmod +x /tmp/cagent
 sudo mv /tmp/cagent /usr/local/bin/cagent
 
 # Verify installation
-cagent --version
+cagent version
 ```
 
 You should see output showing the cagent version.
