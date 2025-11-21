@@ -19,16 +19,29 @@ simple chatbots, cagent agents can:
 - **Integrate Anywhere**: Connect to external services via the Model Context
   Protocol (MCP)
 
+## What's Pre-Configured in This Labspace
+
+This Labspace comes with everything you need to get started:
+
+| Service | URL | Description |
+|---------|-----|-------------|
+| **Docker Model Runner** | `http://model-runner:12434` | Run local AI models (no API key needed!) |
+| **MCP Gateway** | `http://mcp-gateway:8080` | Pre-configured with fetch, duckduckgo, and context7 servers |
+
+> **No API Key? No Problem!** You can complete this entire workshop using Docker Model Runner with local models. See Step 7 for details.
+
 ## Prerequisites
 
 Before starting this workshop, you should have:
 
 1. **cagent installed** - Follow the installation instructions below
-2. **Docker Desktop running** - Required for Step 3 onwards (MCP and agent sharing)
-3. **Docker Hub account** - For pushing and pulling shared agents
-4. **AI API access** - OpenAI, Anthropic, or other supported model providers
+2. **AI API access** - Choose one of:
+   - OpenAI API key (for GPT-4, GPT-4o)
+   - Anthropic API key (for Claude models)
+   - Google API key (for Gemini models)
+   - **OR** use Docker Model Runner (no API key needed!)
 
-## Step 1: Install cagent on Linux
+## Step 1: Install cagent
 
 Since you're running this lab on Ubuntu Linux, let's install cagent directly. Run the following commands:
 
@@ -46,27 +59,35 @@ sudo mv /tmp/cagent /usr/local/bin/cagent
 cagent --version
 ```
 
-You should see output showing the cagent version. If you see "command not found", make sure `/usr/local/bin` is in your PATH:
+You should see output showing the cagent version.
+
+## Step 2: Verify Pre-Configured Services
+
+Let's make sure the Labspace services are running:
 
 ```bash
-echo $PATH
+# Check Docker Model Runner
+curl http://model-runner:12434/models
 ```
-
-If needed, add it to your PATH:
 
 ```bash
-export PATH="/usr/local/bin:$PATH"
+# Check MCP Gateway
+curl http://mcp-gateway:8080/health
 ```
 
+If both commands return successfully, you're ready to go!
 
-## Step 2: Set Your API Keys
+## Step 3: Pull a Local Model (Optional but Recommended)
 
-You'll configure your API keys in the next step of this workshop. Based on the models you configure your agents to use, you will need to set the corresponding provider API key. You will need at least one of these:
+If you want to use local models without API keys, pull a model now:
 
-- **OpenAI** - For GPT-4, GPT-4o, and other OpenAI models
-- **Anthropic** - For Claude models (Claude 3.5 Sonnet, etc.)
-- **Google** - For Gemini models
-- **Docker Model Runner (DMR)** - For local models (no API key needed)
+```bash
+curl -X POST http://model-runner:12434/models/create \
+  -H "Content-Type: application/json" \
+  -d '{"model": "ai/smollm2"}'
+```
+
+This may take a few minutes to download.
 
 ## Workshop Overview
 
@@ -80,12 +101,14 @@ agents that do things for you.
 
 ## What You'll Learn
 
-- **Step 2**: Getting started with your first agent and setting up API keys
-- **Step 3**: Using built-in tools for file operations and web browsing
-- **Step 4**: Integrating external services with Model Context Protocol (MCP)
-- **Step 5**: Sharing agents with your team via Docker Hub
-- **Step 6**: Building multi-agent teams with sub-agents
-- **Step 7**: Using Docker Model Runner for local AI models
-- **Step 8**: Next steps and advanced topics
+| Step | Topic | Description |
+|------|-------|-------------|
+| 2 | Getting Started | Create your first agent and set up API keys |
+| 3 | Built-in Tools | File operations, shell commands, memory, and todo tracking |
+| 4 | MCP Integration | Connect to external services (fetch, search, documentation) |
+| 5 | Sharing Agents | Push and pull agents via Docker Hub |
+| 6 | Sub-agents | Build multi-agent teams with specialized roles |
+| 7 | Model Runner | Run local AI models without API keys |
+| 8 | Conclusion | Next steps and advanced topics |
 
 Let's get started!
