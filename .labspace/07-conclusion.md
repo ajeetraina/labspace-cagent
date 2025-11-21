@@ -12,7 +12,7 @@ Throughout this workshop you've covered:
 - MCP integration for extending agent capabilities with external services
 - Multi-agent systems with specialized roles and task delegation
 - Agent sharing through Docker registries
-- Working with different AI providers and local models through DMR
+
 
 ## Next Steps
 
