@@ -25,10 +25,7 @@ This Labspace comes with everything you need to get started:
 
 | Service | URL | Description |
 |---------|-----|-------------|
-| **Docker Model Runner** | `http://model-runner:12434` | Run local AI models (no API key needed!) |
-| **MCP Gateway** | `http://mcp-gateway:8080` | Pre-configured with fetch, duckduckgo, and context7 servers |
-
-> **No API Key? No Problem!** You can complete this entire workshop using Docker Model Runner with local models. See Step 7 for details.
+| **MCP Gateway** | `http://labspace-mcp-gateway:8080` | Pre-configured with fetch, duckduckgo, and context7 servers |
 
 ## Prerequisites
 
@@ -39,7 +36,6 @@ Before starting this workshop, you should have:
    - OpenAI API key (for GPT-4, GPT-4o)
    - Anthropic API key (for Claude models)
    - Google API key (for Gemini models)
-   - **OR** use Docker Model Runner (no API key needed!)
 
 ## Step 1: Install cagent
 
@@ -66,28 +62,11 @@ You should see output showing the cagent version.
 Let's make sure the Labspace services are running:
 
 ```bash
-# Check Docker Model Runner
-curl http://model-runner:12434/models
-```
-
-```bash
 # Check MCP Gateway
-curl http://mcp-gateway:8080/health
+curl http://labspace-mcp-gateway:8080/sse
 ```
 
-If both commands return successfully, you're ready to go!
-
-## Step 3: Pull a Local Model (Optional but Recommended)
-
-If you want to use local models without API keys, pull a model now:
-
-```bash
-curl -X POST http://model-runner:12434/models/create \
-  -H "Content-Type: application/json" \
-  -d '{"model": "ai/smollm2"}'
-```
-
-This may take a few minutes to download.
+If the command returns successfully, you're ready to go!
 
 ## Workshop Overview
 
@@ -108,7 +87,7 @@ agents that do things for you.
 | 4 | MCP Integration | Connect to external services (fetch, search, documentation) |
 | 5 | Sharing Agents | Push and pull agents via Docker Hub |
 | 6 | Sub-agents | Build multi-agent teams with specialized roles |
-| 7 | Model Runner | Run local AI models without API keys |
+| 7 | Model Runner | Run local AI models on your local machine (reference only) |
 | 8 | Conclusion | Next steps and advanced topics |
 
 Let's get started!
